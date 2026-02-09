@@ -38,5 +38,10 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add docs/
-          git commit -m "Deploy site: ${{ github.sha }}" || echo "No changes to commit"
-          git push
+          # Only commit if changes exist (prevents workflow failures)
+          if ! git diff --cached --quiet; then
+            git commit -m "Deploy MkDocs site [skip ci]" 
+            git push
+          else
+            echo "No changes detected in built site"
+          fi
