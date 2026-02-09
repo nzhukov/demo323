@@ -30,7 +30,7 @@ jobs:
       # 4. Сборка сайта из папки site/, вывод в docs/
       - name: Build MkDocs site
         run: |
-          mkdocs build -f source/mkdocs.yml --site-dir ../docs
+          mkdocs build -f source/mkdocs.yml --site-dir ../docs --clean
 
       # 5. Деплой: коммит в текущую ветку (изменения в docs/)
       - name: Commit and push to docs/
