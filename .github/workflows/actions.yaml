@@ -33,15 +33,26 @@ jobs:
           mkdocs build -f source/mkdocs.yml --site-dir ../docs --clean
 
       # 5. Деплой: коммит в текущую ветку (изменения в docs/)
-      - name: Commit and push to docs/
+      - name: Force-add docs/ (bypass .gitignore for tracked files)
         run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add docs/
-          # Only commit if changes exist (prevents workflow failures)
-          if ! git diff --cached --quiet; then
-            git commit -m "Deploy MkDocs site [skip ci]" 
-            git push
-          else
-            echo "No changes detected in built site"
+          # Critical: Use -f to force-add even if .gitignore blocks docs/
+          git add -f docs/
+          echo "=== Git status AFTER add ==="
+          git status --short
+
+      - name: Commit and push ONLY if changes exist
+        run: |
+          if git diff --cached --quiet; then
+            echo "❌ CRITICAL: Build completed but NO CHANGES detected in docs/!"
+            echo "   Possible causes:"
+            echo "   1. Root .gitignore is blocking docs/ (check workflow logs above)"
+            echo "   2. Theme/plugin not installed (check 'Install MkDocs + Theme' step)"
+            echo "   3. mkdocs.yml changes didn't affect output (verify theme name spelling)"
+            echo "   4. Build used cached files (unlikely with --clean)"
+            exit 1  # FAIL workflow to alert you
           fi
+          
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git commit -m "Deploy MkDocs site - $(date +%Y%m%d-%H%M%S) [skip ci]"
+          git push
