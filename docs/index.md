@@ -1,5 +1,7 @@
 ## Sample
 
+Hello, world! Today is 28/03/2026
+
 One more, finally. Or not? :)
 
 Now:
