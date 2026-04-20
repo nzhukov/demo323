@@ -11,9 +11,6 @@ jobs:
     name: Deploy docs
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout master
-        uses: actions/checkout@v6
-
-      - name: Deploy docs
-      run: echo "Содержимое файла: cat README.md"
-
+      - uses: actions/checkout@v6
+        with:
+          path: main
