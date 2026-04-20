@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main  # или другая основная ветка
-  # workflow_dispatch:  # ручная активация через интерфейс GitHub
+  workflow_dispatch:  # ручная активация через интерфейс GitHub
 
 jobs:
   build:
@@ -12,10 +12,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout master
-        uses: actions/checkout@v1
+        uses: actions/checkout@v6
 
       - name: Deploy docs
-        uses: mhausenblas/mkdocs-deploy-gh-pages@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          REQUIREMENTS: requirements.txt
+        run: echo "Содержимое файла: $(cat README.md)"
+
