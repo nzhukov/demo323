@@ -15,5 +15,5 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Deploy docs
-        run: echo "Содержимое файла: $(cat README.md)"
+      run: echo "Содержимое файла: cat README.md"
 
