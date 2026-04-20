@@ -7,19 +7,20 @@ on:
   workflow_dispatch:  # ручная активация через интерфейс GitHub
 
 jobs:
-  build:
-    name: Deploy docs
+  setup:
+    name: Setup MkDocs Site
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
-        with:
-          path: main
+      - name: Checkout
+        uses: actions/checkout@v6
       
-      - name: Test
-        run: cd ./main && echo "$(cat README.md)"
+      - name: Checkout
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.13' 
 
-      - name: Test2
-        run: cd ./main && echo "$(cat requirements.txt)"
+      - name: Python install
+        run: pip install -r requirements.txt
 
-      - name: Test3
-        run: cd ./main && ls -la
+      - name: MkDocs Build
+        run: mkdocs gh-deploy --force --clean --verbose 
