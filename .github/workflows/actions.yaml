@@ -16,10 +16,10 @@ jobs:
           path: main
       
       - name: Test
-        run: echo "$(cat README.md)"
+        run: cd ./main && echo "$(cat README.md)"
 
       - name: Test2
-        run: echo "$(cat requirements.txt)"
+        run: cd ./main && echo "$(cat requirements.txt)"
 
       - name: Test3
-        run: "ls -la"
+        run: cd ./main && ls -la
