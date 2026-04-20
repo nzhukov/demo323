@@ -17,5 +17,9 @@ jobs:
       
       - name: Test
         run: echo "$(cat README.md)"
+
+      - name: Test2
         run: echo "$(cat requirements.txt)"
+
+      - name: Test3
         run: "ls -la"
